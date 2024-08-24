@@ -25,6 +25,7 @@ spec:
       containers:
       - name: ms-helloworld
         image: utomoindra/ms-helloworld:latest
+        imagePullPolicy: Always
         ports:
         - containerPort: 8080
           protocol: TCP
@@ -41,4 +42,4 @@ spec:
           periodSeconds: 5
       restartPolicy: Always
       imagePullSecrets:
-      - name: local-registry
+      - name: dockerhub-registry
