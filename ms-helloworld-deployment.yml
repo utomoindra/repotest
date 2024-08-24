@@ -1,0 +1,44 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ms-helloworld
+  namespace: test
+  labels:
+    app: ms-helloworld
+spec:
+  replicas: 1
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 25%
+      maxSurge: 50%
+  selector:
+    matchLabels:
+      app: ms-helloworld
+      tier: frontend
+  template:
+    metadata:
+      labels:
+        app: ms-helloworld
+        tier: frontend
+    spec:
+      containers:
+      - name: ms-helloworld
+        image: utomoindra/hello-world-app:latest
+        ports:
+        - containerPort: 8080
+          protocol: TCP
+        readinessProbe:
+          tcpSocket:
+            port: 8080
+          initialDelaySeconds: 10
+          periodSeconds: 5
+          successThreshold: 1
+        livenessProbe:
+          tcpSocket:
+            port: 8080
+          initialDelaySeconds: 10
+          periodSeconds: 5
+      restartPolicy: Always
+      imagePullSecrets:
+      - name: local-registry
