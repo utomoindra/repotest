@@ -24,7 +24,7 @@ spec:
     spec:
       containers:
       - name: ms-helloworld
-        image: utomoindra/hello-world-app:latest
+        image: utomoindra/ms-helloworld:latest
         ports:
         - containerPort: 8080
           protocol: TCP
